@@ -15,6 +15,15 @@ dependencies:
   flutter_screenutil: 
   dio:
   get_storage: 
+  carousel_slider: ^5.0.0
+  firebase_core:
+  flutter_svg:
+  googleapis: 
+  googleapis_auth:
+  http: 
+  firebase_messaging: 
+  flutter_local_notifications:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -24,6 +33,10 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+  fonts:
+    - family: quicksand
+      fonts:
+        - asset: assets/fonts/static/Quicksand-Regular.ttf
 
   
   
