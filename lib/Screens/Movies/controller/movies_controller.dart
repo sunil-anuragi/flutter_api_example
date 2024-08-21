@@ -11,7 +11,7 @@ class MovieController extends GetxController {
   var isLoadingslider = true.obs;
   int _currentPage = 1;
   bool isLastPage = false;
-  bool _isLoadingMore = false;
+  bool isLoadingMore = false;
   RxList<Results> filteredMovies = <Results>[].obs;
   TextEditingController searchController = TextEditingController();
   ScrollController scrollController = ScrollController();
@@ -35,8 +35,14 @@ class MovieController extends GetxController {
         RemoteNotification? notification = message.notification;
         AndroidNotification? android = message.notification?.android;
         if (notification != null) {
-          Get.toNamed(Routes.moviedetailScreen,
-              arguments: {"id": message.data['id']});
+          Get.toNamed(
+            Routes.myHomePage,
+          );
+          Future.delayed(const Duration(milliseconds: 100), () {
+            Get.toNamed(Routes.moviedetailScreen,
+                arguments: {"id": message.data['id']});
+          });
+          
         }
       }
     });
@@ -62,17 +68,17 @@ class MovieController extends GetxController {
   }
 
   Future<void> fetchMovies({bool loadMore = false}) async {
-    if (isLastPage || _isLoadingMore) return;
+    if (isLastPage || isLoadingMore) return;
 
     try {
       if (loadMore) {
-        _isLoadingMore = true;
+        isLoadingMore = true;
       } else {
         isLoading(true);
       }
 
       var response = await Server.get(
-        ApiConstants.getmovies(limit: 15, page: _currentPage),
+        ApiConstants.getmovies(limit: 5, page: _currentPage),
         headers: {
           "x-rapidapi-host": "moviesdatabase.p.rapidapi.com",
           "x-rapidapi-key": "a1e0eb3a82mshcf06b1107590888p1d5732jsnaf18acf7ea25"
@@ -95,15 +101,23 @@ class MovieController extends GetxController {
       }
     } on DioException catch (e) {
       handleDioError(e);
-       isLoading(false);
+      if (loadMore) {
+        isLoadingMore = false;
+      } else {
+        isLoading(false);
+      }
     } catch (e) {
       print(e.toString());
       Get.snackbar('Error', 'Failed to fetch movies',
           snackPosition: SnackPosition.BOTTOM);
-           isLoading(false);
+      if (loadMore) {
+        isLoadingMore = false;
+      } else {
+        isLoading(false);
+      }
     } finally {
       if (loadMore) {
-        _isLoadingMore = false;
+        isLoadingMore = false;
       } else {
         isLoading(false);
       }

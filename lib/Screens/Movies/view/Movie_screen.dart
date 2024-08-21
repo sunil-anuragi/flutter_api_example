@@ -1,4 +1,3 @@
-
 import '../../../Config/export.dart';
 
 class MoviesScreen extends StatelessWidget {
@@ -135,6 +134,10 @@ class MoviesScreen extends StatelessWidget {
                                           : controller.filteredMovies[index]);
                                 },
                               ),
+                              if (controller.searchController.text.isEmpty)
+                                !controller.isLoadingMore
+                                    ? Center(child: CircularProgressIndicator())
+                                    : Container()
                             ],
                           )),
                     ),
@@ -145,4 +148,3 @@ class MoviesScreen extends StatelessWidget {
     );
   }
 }
-

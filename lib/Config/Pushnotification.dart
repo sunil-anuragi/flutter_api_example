@@ -44,7 +44,7 @@ class PushNotificationService {
           importance: Importance.max,
         );
     final AndroidNotificationChannel channel = androidNotificationChannel();
-   
+
     //Listen to messages in Foreground
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
       RemoteNotification? notification = message.notification;
@@ -85,11 +85,11 @@ class PushNotificationService {
             ));
       }
     });
- 
+
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
-     
+
       //Initialize FlutterLocalNotifications
       final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
           FlutterLocalNotificationsPlugin();
@@ -123,11 +123,15 @@ class PushNotificationService {
               ),
             ));
       }
-       Get.toNamed(Routes.moviedetailScreen,
-          arguments: {"id": message.data['id']});
+      Get.toNamed(
+        Routes.myHomePage,
+        
+      );
+      Future.delayed(const Duration(milliseconds: 100), () {
+        Get.toNamed(Routes.moviedetailScreen,
+            arguments: {"id": message.data['id']});
+      });
     });
- 
- 
   }
 
   shownotification(title, body) {
@@ -161,5 +165,4 @@ class PushNotificationService {
       return token;
     });
   }
-
 }
