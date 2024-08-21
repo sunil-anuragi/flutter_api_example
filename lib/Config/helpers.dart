@@ -46,6 +46,15 @@ void handleDioError(DioException e) {
         // Handle Bad Request error
         _handleBadRequest(e.response?.data);
         break;
+
+      case 500:
+        // Handle Bad Request error
+        _handleBadRequest(e.response?.data);
+        break;
+      case 502:
+        // Handle Bad Request error
+        _handleBadRequest(e.response?.data);
+        break;
       // Handle other status codes as needed
       default:
         print('Unexpected error: ${e.response?.statusCode}');
@@ -60,8 +69,7 @@ void _handleBadRequest(dynamic data) {
   // Handle specific details of the bad request error
   if (data is Map && data['message'] != null) {
     print('Bad Request Error: ${data['message']}');
-    Get.snackbar('Alert', data['message'],
-          snackPosition: SnackPosition.BOTTOM);
+    Get.snackbar('Alert', data['message'], snackPosition: SnackPosition.BOTTOM);
     // Show error to the user, log it, etc.
   } else {
     print('Bad Request Error: Unknown format');

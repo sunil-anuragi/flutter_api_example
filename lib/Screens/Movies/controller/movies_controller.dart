@@ -95,10 +95,12 @@ class MovieController extends GetxController {
       }
     } on DioException catch (e) {
       handleDioError(e);
+       isLoading(false);
     } catch (e) {
       print(e.toString());
       Get.snackbar('Error', 'Failed to fetch movies',
           snackPosition: SnackPosition.BOTTOM);
+           isLoading(false);
     } finally {
       if (loadMore) {
         _isLoadingMore = false;
